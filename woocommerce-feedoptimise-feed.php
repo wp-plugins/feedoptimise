@@ -33,14 +33,22 @@
 	        }
 
 	        // Query for the products
-	        $chunk_size = apply_filters ( 'woocommerce_gpf_chunk_size', 20 );
+	        $chunk_size = (int) (isset($_GET['woocommerce_fo_chunk_size']) ? $_GET['woocommerce_fo_chunk_size'] : 20);
+	        $limit 		= (int) (isset($_GET['woocommerce_fo_limit']) ? $_GET['woocommerce_fo_limit'] : 0);
+	        $offset 	= (int) (isset($_GET['woocommerce_fo_offset']) ? $_GET['woocommerce_fo_offset'] : 0);
+
+	        if($limit && $chunk_size > $limit)
+	        {
+	        	$chunk_size = $limit;
+	        }
 
 	        $args['post_type'] 		= 'product';
 	        $args['numberposts'] 	= $chunk_size;
-	        $args['offset'] 		= 0;
+	        $args['offset'] 		= $offset;
 	        $args['post_status']	= 'publish';
 
 	        $products = get_posts ($args);
+	        $_exported = 0;
 	        
 	        while ( count ( $products ) ) {
 
@@ -111,6 +119,11 @@
 	               //$this->feed->render_item ( $feed_item );
 
 	                echo json_encode($feed_item)."\n";
+	                $_exported++;
+	                if($limit && $_exported>=$limit)
+	                {
+	                	exit();
+	                }
 
 	            }
 
