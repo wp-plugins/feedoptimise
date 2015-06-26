@@ -2,7 +2,7 @@
 
 	class woocommerce_feedoptimise_feed
 	{
-		const VERSION = '1.0.5';
+		const VERSION = '1.0.6';
 
 	    function render()
 	    {
@@ -140,7 +140,7 @@
 	                        $_variantions = array();
 	                        foreach($variations as $key=>$var)
 	                        {
-	                        	$_key = str_replace('attribute_','',$key);
+	                        	$_key = str_replace(array('attribute_','attribute_pa_'),'',$key);
 
 	                        	if(isset($parent_attributes[$_key]) && isset($parent_attributes[$_key]['values'][$var]))
 	                        	{
