@@ -4,7 +4,7 @@ Plugin Name: Feed Optimise
 Plugin URI: https://www.feedoptimise.com/
 Description: WooCommerce extension that allows your shop to directly integrate with <a target="_blank" href="https://www.feedoptimise.com/">feedoptimise.com</a> services.
 Author: Feed Optimise
-Version: 1.0.6
+Version: 1.0.7
 Author URI: https://www.feedoptimise.com/
 License: GPLv3
 */

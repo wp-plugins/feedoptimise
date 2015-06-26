@@ -2,7 +2,7 @@
 
 	class woocommerce_feedoptimise_feed
 	{
-		const VERSION = '1.0.6';
+		const VERSION = '1.0.7';
 
 	    function render()
 	    {
@@ -46,6 +46,8 @@
 	        $chunk_size = (int) (isset($_GET['woocommerce_fo_chunk_size']) ? $_GET['woocommerce_fo_chunk_size'] : 20);
 	        $limit 		= (int) (isset($_GET['woocommerce_fo_limit']) ? $_GET['woocommerce_fo_limit'] : 0);
 	        $offset 	= (int) (isset($_GET['woocommerce_fo_offset']) ? $_GET['woocommerce_fo_offset'] : 0);
+
+	        $DELIMITER	= (isset($_GET['woocommerce_fo_delimiter']) ? $_GET['woocommerce_fo_delimiter'] : WC_DELIMITER);
 
 	        if($limit && $chunk_size > $limit)
 	        {
@@ -122,7 +124,7 @@
 	                        foreach($parent_attributes as $key=>$value)
 	                        {
 	                        	//sanitize_title
-	                        	$values = array_map( 'trim', explode( WC_DELIMITER, $value ) );
+	                        	$values = array_map( 'trim', explode( $DELIMITER, $value ) );
 	                        	$values_ = array();
 
 	                        	foreach($values as $v)
@@ -140,7 +142,7 @@
 	                        $_variantions = array();
 	                        foreach($variations as $key=>$var)
 	                        {
-	                        	$_key = str_replace(array('attribute_','attribute_pa_'),'',$key);
+	                        	$_key = str_replace(array('attribute_'),'',$key);
 
 	                        	if(isset($parent_attributes[$_key]) && isset($parent_attributes[$_key]['values'][$var]))
 	                        	{
