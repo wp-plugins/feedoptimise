@@ -2,6 +2,7 @@
 
 	class woocommerce_feedoptimise_feed
 	{
+		const VERSION = '1.0.5';
 
 	    function render()
 	    {
@@ -16,6 +17,15 @@
 	     * @access public
 	     */
 	    protected function _render_product_feed() {
+
+	    	if(isset($_GET['woocommerce_fo_version']))
+	    	{
+	    		echo json_encode(array(
+	    			'foVersion'	=> self::VERSION
+	    		));
+
+	    		exit;
+	    	}
 
 	        global $wpdb, $wp_query, $post;
 
@@ -105,6 +115,45 @@
 	                        {
 	                        	$variant_in_stock = true;
 	                        }
+
+	                        $variations 		= $child_product->get_variation_attributes( );
+	                        $parent_attributes 	= $this->_getCustomData($woocommerce_product,'attributes');
+
+	                        foreach($parent_attributes as $key=>$value)
+	                        {
+	                        	//sanitize_title
+	                        	$values = array_map( 'trim', explode( WC_DELIMITER, $value ) );
+	                        	$values_ = array();
+
+	                        	foreach($values as $v)
+	                        	{
+	                        		$values_[sanitize_title($v)] = $v;
+	                        	}
+
+	                        	$parent_attributes[sanitize_title($key)] = array(
+	                        		'name'		=> $key,
+	                        		'values'	=> $values_
+	                        	);
+	                        
+	                        }
+
+	                        $_variantions = array();
+	                        foreach($variations as $key=>$var)
+	                        {
+	                        	$_key = str_replace('attribute_','',$key);
+
+	                        	if(isset($parent_attributes[$_key]) && isset($parent_attributes[$_key]['values'][$var]))
+	                        	{
+	                        		$_variantions[$_key] = array(
+	                        			'attrName'		=> $parent_attributes[$_key]['name'],
+	                        			'attrValue'		=> $parent_attributes[$_key]['values'][$var],
+	                        			'attrValueKey'	=> $var
+	                        		);
+	                        	}
+	                        }
+
+	                        $variant->variationId 	= isset($child_product->variation_id) ? $child_product->variation_id : '';
+	                        $variant->variations 	= $_variantions;
 
 	                        $feed_item->variants[] = $variant;
 
