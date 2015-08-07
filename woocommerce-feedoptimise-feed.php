@@ -2,7 +2,7 @@
 
 	class woocommerce_feedoptimise_feed
 	{
-		const VERSION = '1.0.7';
+		const VERSION = '1.0.8';
 
 	    function render()
 	    {
@@ -120,6 +120,11 @@
 
 	                        $variations 		= $child_product->get_variation_attributes( );
 	                        $parent_attributes 	= $this->_getCustomData($woocommerce_product,'attributes');
+
+	                        $variant->_childMeta = array(
+	                        	'variations'		=> $variations,
+	                        	'parent_attributes'	=> $parent_attributes
+	                        );
 
 	                        foreach($parent_attributes as $key=>$value)
 	                        {
@@ -248,6 +253,10 @@
 	        */
 
 	        $feed_item->custom_fields  		= $this->_getCustomData($woocommerce_product,'fields');
+	        if(isset($feed_item->custom_fields['total_sales']))
+	        {
+	        	unset($feed_item->custom_fields['total_sales']);
+	        }
 
 	        if($feed_item->type!='variation')
 	        {
