@@ -35,6 +35,9 @@ Do a test order and contact us.
 
 == Changelog ==
 
+= 1.0.10 =
+* Version sync
+
 = 1.0.9 =
 * Added up to 4.3 tests
 
