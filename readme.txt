@@ -2,8 +2,8 @@
 Contributors: feedoptimise
 Tags: WooCommerce, data feeds, exporter, feedoptimise
 Requires at least: 3.1
-Tested up to: 4.1
-Stable tag: 1.0.8
+Tested up to: 4.3
+Stable tag: 1.0.9
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -34,6 +34,9 @@ Do a test order and contact us.
 == Screenshots ==
 
 == Changelog ==
+
+= 1.0.9 =
+* Added up to 4.3 tests
 
 = 1.0.8 =
 * Added child meta
