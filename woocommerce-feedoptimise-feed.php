@@ -2,7 +2,7 @@
 
 	class woocommerce_feedoptimise_feed
 	{
-		const VERSION = '1.0.9';
+		const VERSION = '1.0.10';
 
 	    function render()
 	    {
