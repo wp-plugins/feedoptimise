@@ -2,7 +2,7 @@
 
 	class woocommerce_feedoptimise_feed
 	{
-		const VERSION = '1.0.10';
+		const VERSION = '1.0.11';
 
 	    function render()
 	    {
@@ -111,6 +111,11 @@
 
 	                        }
 
+	                        $rrp = $child_product->get_regular_price();
+	                        if($rrp && (!isset($feed_item->was_price) OR $feed_item->was_price>$rrp))
+	                        {
+	                        	$feed_item->was_price = $rrp;
+	                        }
 
 	                        $variant = $this->_getFeedItem($child_product);
 	                        if($variant->is_in_stock) 
@@ -202,6 +207,7 @@
 
 	        $feed_item->price_ex_tax = $woocommerce_product->get_price_excluding_tax();
 	        $feed_item->price_inc_tax = $woocommerce_product->get_price();
+	        $feed_item->was_price = $woocommerce_product->get_regular_price();
 
 	        // Get main item information
 	        
